@@ -1,0 +1,12 @@
+version: '3'
+services:
+  python:
+    build : '.'
+    image: btc-node
+    container_name: btc-python
+    working_dir: '/root/src/'
+    volumes:
+      - './src:/root/src/'
+      - './dat:/root/dat/'
+      - './log:/root/log/'
+    tty: true
