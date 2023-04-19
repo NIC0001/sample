@@ -1,0 +1,11 @@
+version: '3'
+services:
+  python:
+    build : '.'
+    image: scraping
+    container_name: scraping
+    working_dir: '/root/'
+    volumes:
+      - './src:/root/src/'
+      - './dat:/root/dat/'
+    tty: True
