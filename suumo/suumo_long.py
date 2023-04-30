@@ -15,6 +15,38 @@ def json_write(path,x):
         f.write(dump)
         f.close()
 
+def get_archive(soup):
+    retail_data = {}
+    contents = soup.find('div', id="contents")
+    
+    retail_data['name'] = contents.find('div', attrs={"class", "h1title"}).find('h1').text
+    
+    table = contents.find('table', attrs={"class", "w540 bdLLGray tlf fgBrown fs12"})
+    
+    for tr in table.find_all('tr'):
+        for idx, th in enumerate(tr.find_all('th')):
+            td = tr.find_all('td')[idx]
+            if '住所' in th:
+                retail_data['address'] = td.text
+            elif '最寄駅' in th:
+                retail_data['walk_station'] = td.text.replace('\t', '')
+            elif '種別' in th:
+                retail_data['building_class'] = td.text
+            elif '築年月' in th:
+                retail_data['Building_date'] = td.text
+            elif '構造' in th:
+                retail_data['structure'] = td.text
+            elif '敷地面積' in th:
+                retail_data['site_area'] = td.text
+            elif '階建' in th:
+                retail_data['story'] = td.text
+            elif '建築面積' in th:
+                retail_data['Building_area'] = td.text
+            elif '総戸数' in th:
+                retail_data['total_units'] = td.text
+            elif '駐車場' in th:
+                retail_data['parking'] = td.text
+    return retail_data
 
 if __name__ == '__main__':
 
